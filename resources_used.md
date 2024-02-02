@@ -4,8 +4,11 @@ These are resources I have used throughout the project without any special forma
 
 # Working anc current links:
 https://www.the-diy-life.com/add-an-oled-stats-display-to-raspberry-pi-os-bullseye/ - guide to configuring screen, contains dependencies required such as python. 
+
 https://www.youtube.com/watch?v=8C2zk6B-eLU&ab_channel=DerekMolloy - understanding ic2 and configuring it and validating that
+
 https://github.com/adafruit/Adafruit_Python_SSD1306 - contains drivers (?) for the display, or whatever it is that configures it. also contains example code and displays!!!
+
 https://doc-0c-8o-apps-viewer.googleusercontent.com/viewer/secure/pdf/gvjduu0j4g0m2h6uabstj9ksvr2en8fd/866iakjggdl7hc43plbjs2tdu95o5eti/1706876550000/gmail/12764598070950295518/ACFrOgAzCorFf7Di27xUg5j_-pfL_33AGm9k7Cxwx9PRlZ_oDvD-ny0RQX9RNIR8gO9P-Q3Mskgvr61fn1EVpBa63I7hZ6n7Kuqq6C-RysrX_e3H1Q4pIDGBW1ArWRWgHwvlyJtO3ibyXp-EG8to?print=true&nonce=t7um080rr5o0i&user=12764598070950295518&hash=3jleobfc21tkgsk37m72p24obv4gn6e4
 
 
