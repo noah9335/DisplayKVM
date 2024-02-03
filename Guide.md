@@ -20,6 +20,8 @@ pip3 install --upgrade setuptools wheel - updates pip and installs setup tools
 
 pip install Adafruit-SSD1306 - installs modules for the display
 
+apt-get install python3-pil - python image library
+
 # i2c verification
 i2cdetect -l  - lists i2c buses
 
