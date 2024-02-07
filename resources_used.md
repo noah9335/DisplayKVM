@@ -16,3 +16,4 @@ https://doc-0c-8o-apps-viewer.googleusercontent.com/viewer/secure/pdf/gvjduu0j4g
 # depreciated links (keeping these just in case):
 https://windix.medium.com/pikvm-with-raspberry-pi-zero-2-w-b5f9d4a6ff32 - minor dependancies and kind of guide
 https://github.com/pikvm/packages/tree/master/packages/kvmd-oled - repo for oled screen, no guide
+hello
