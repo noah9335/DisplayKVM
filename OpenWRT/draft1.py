@@ -86,7 +86,7 @@ print(f"Interface: {iface}, IP Address: {ip}")
 
 
 # Draw Some Text
-text = "{ip}"
+text = ip
 (font_width, font_height) = font.getsize(text)
 draw.text(
     (oled.width // 2 - font_width // 2, oled.height // 2 - font_height // 2),
