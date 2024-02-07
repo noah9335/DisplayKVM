@@ -15,6 +15,8 @@ SSH port is default 22, USR is root, PWD... im not putting that on a public repo
 
 	opkg update
 
+    opkg install wget
+    
     opkg install lsblk
         lsblk
     verify type and disk name #likely trivial with this imlementation but should increase compatability, also prevents accidently removing the boot section or something.
@@ -50,7 +52,11 @@ cd /root
 
 # method 1
 
-wget
+wget https://raw.githubusercontent.com/noah9335/DisplayKVM/main/OpenWRT/modifed_hello_world.py
+
+if successful, skip to final compatability mods
+
+# method 2
 
 nano hello_world.py		#copy example from https://learn.adafruit.com/monochrome-oled-breakouts/python-setup 
 
