@@ -29,15 +29,15 @@ import logging
 import datetime
 import time
 
-import netifaces
-import psutil
-import usb.core
+import netifaces # pip3 install netifaces
+import psutil # pip3 install psutil
+import usb.core # pip3 install pyusb
 
-from luma.core import cmdline as luma_cmdline
-from luma.core.device import device as luma_device
+from luma.core import cmdline as luma_cmdline # pip3 install luma.core # pip3 install luma.oled
+from luma.core.device import device as luma_device  
 from luma.core.render import canvas as luma_canvas
 
-from PIL import Image
+from PIL import Image 
 from PIL import ImageFont
 
 
@@ -45,7 +45,9 @@ from PIL import ImageFont
 _logger = logging.getLogger("oled")
 
 
-# =====
+# ===== 
+
+# this section appears to be retiving network settings using the netifaces package
 def _get_ip() -> tuple[str, str]:
     try:
         gws = netifaces.gateways()
@@ -67,6 +69,7 @@ def _get_ip() -> tuple[str, str]:
         pass
     return ("<no-iface>", "<no-ip>")
 
+#appears to be calculating and then displaying up time using psutil package
 
 def _get_uptime() -> str:
     uptime = datetime.timedelta(seconds=int(time.time() - psutil.boot_time()))
