@@ -14,6 +14,7 @@ import logging
 import datetime
 import time
 import netifaces
+from datetime import datetime
 
 # Define the Reset Pin
 oled_reset = None
@@ -56,7 +57,7 @@ font = ImageFont.truetype("m3x6.ttf", 16)
 
 ## noah modifications to print IP
 
-def _get_ip() -> tuple[str, str]:
+def _get_ip() -> tuple[str, str, str]:
     try:
         gws = netifaces.gateways()
         if "default" in gws:
@@ -64,21 +65,21 @@ def _get_ip() -> tuple[str, str]:
                 if proto in gws["default"]:
                     iface = gws["default"][proto][1]
                     addrs = netifaces.ifaddresses(iface)
-                    return (iface, addrs[proto][0]["addr"])
+                    return (iface, addrs[proto][0]["addr"], addrs[proto][0]["netmask"])
 
         for iface in netifaces.interfaces():
             if not iface.startswith(("lo", "docker")):
                 addrs = netifaces.ifaddresses(iface)
                 for proto in [socket.AF_INET, socket.AF_INET6]:
                     if proto in addrs:
-                        return (iface, addrs[proto][0]["addr"])
+                        return (iface, addrs[proto][0]["addr"], addrs[proto][0]["netmask"])
     except Exception:
         # _logger.exception("Can't get iface/IP")
         pass
-    return ("<no-iface>", "<no-ip>")
+    return ("<no-iface>", "<no-ip>", "<no-netmask>")
 
-iface, ip = _get_ip()
-print(f"Interface: {iface}, IP Address: {ip}")
+iface, ip, netmask = _get_ip()
+print(f"Interface: {iface}, IP Address: {ip}, Subnet: {netmask}")
 
 ##SW INSERT UPS CODE START
 
@@ -308,7 +309,14 @@ ina = INA219(i2c_bus = 2,addr = 0x43)
 
 ##SW INSERT UPS CODE END
 
-# Draw Some Text
+##TIME (reliant on from datetime import datetime)
+currentTime = datetime.now
+formattedCurrentTime = currentTime.strftime("%H:%M:%S")
+
+
+##DISPLAY BEGINS
+
+#UPS status
 while True:
     oled.fill(0)
     oled.show()
@@ -338,19 +346,19 @@ while True:
     percent = str(percent)
     percent = percent[:5]
 
-    draw.line(
+    draw.line( #horizontal line
         (0,7, oled.width,7),
         fill=255,
         width=1,
     )
 
-    draw.line(
+    draw.line( #vertical line
         (oled.width // 2,7, oled.width // 2,oled.height),
         fill=255,
         width=1,
     )
 
-    draw.multiline_text(
+    draw.multiline_text( #using \n for new line
         (0,4),
         'Volt : ' + voltage + ' V\nCurr : ' + current + ' A\nPwr : ' + power + ' W',
         font=font,
@@ -365,6 +373,54 @@ while True:
         fill=255,
         spacing=-3,
     )
+    #UPS status end
+
+    #network status
+    oled.fill(0)
+    oled.show()
+    image = Image.new('1', (oled.width, oled.height))
+    draw = ImageDraw.Draw(image)
+
+    menu = 'NETWORK STATUS'
+    left, top, right, bottom = font.getbbox(menu)
+    menu_text_width = right - left
+    menu_text_height = bottom - top
+
+    draw.text(
+        (oled.width // 2 - menu_text_width // 2, -4),
+        menu,
+        font=font,
+        fill=255,
+    )
+
+    draw.line( #horizontal line
+        (0,7, oled.width,7),
+        fill=255,
+        width=1,
+    )
+
+    draw.line( #vertical line
+        (oled.width // 2,7, oled.width // 2,oled.height),
+        fill=255,
+        width=1,
+    )
+
+    draw.multiline_text( #using \n for new line
+        (0,4),
+        'Iface : ' + iface + ' \nIP : ' + ip + ' \nSubnet : ' + netmask,
+        font=font,
+        fill=255,
+        spacing=-3,
+    )
+
+    draw.multiline_text(
+        (oled.width // 2 + 4,4),
+        'time : ' + formattedCurrentTime + ' \nDNS : pls help' + '\nNTP : ' + ip,
+        font=font,
+        fill=255,
+        spacing=-3,
+    )
+
 
 #    draw.text(
 #        (0, 3),
